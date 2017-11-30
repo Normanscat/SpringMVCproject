@@ -3,10 +3,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="pagination/pagination.css" />
 <script src="pagination/jquery.pagination.js"></script>
+<style>
+.searchs {
+	magin-right: 10px;
+}
+</style>
 <div id="mainPanel" class="main-panel">
-	<section class="toolbar">
-		<label for="">用户名称：</label> <input type="text" name="userName" />
-		<button type="button" class="search">查询</button>
+	<section
+		style="display: flex; flex-direction: row-reverse; justify-content: space-between;"
+		class="toolbar">
+		<div>
+			<label for="">用户名称：</label> <input type="text" name="userName"
+				placeholder="请输入关键字" />
+			<button type="button" class="searchs" data-url="/User/#">搜索</button>
+		</div>
+		<button type="button" class="search" data-url="/User/add">删除用戶</button>
+		<button type="button" class="search" data-url="/User/#">新增用戶</button>
 	</section>
 	<section>
 		<form action="${pageContext.request.contextPath }/User/delete"
@@ -20,6 +32,7 @@
 						<td>性别</td>
 						<td>爱好</td>
 						<td>邮箱</td>
+						<td>创建时间</td>
 						<td>操作</td>
 					</tr>
 				</thead>
@@ -31,6 +44,7 @@
 						<td>${item.sex }</td>
 						<td>${item.hobby }</td>
 						<td>${item.email }</td>
+						<td>${item.creattime }</td>
 						<td><a data-url="/User/edit/${item.id }" class="edit"
 							style="cursor: pointer">修改</a> <a
 							data-url="/User/delete/${item.id }" class="delete"
@@ -44,7 +58,8 @@
 
 <script type="text/javascript">
 	$(function() {
-		var $rightContentPanell = $("body").find("form");
+		var $rightContentPanell = $("body").find(".right");
+		var $rightContentPanells = $("body").find(".rights");
 		var Path = "${pageContext.request.contextPath }";
 
 		//删除
@@ -55,16 +70,21 @@
 			var $this = $(this);
 			var url = $this.data("url");
 			$rightContentPanell.load(Path + url);
+			$(".active").trigger("click");
 		})
 		//编辑
 		$(".edit").on("click", function() {
+			$rightContentPanells.hide();
 			var $this = $(this);
 			var url = $this.data("url");
 			$rightContentPanell.load(Path + url);
 		});
 		//搜索
 		$(".search").on("click", function() {
-			alert("功能待开发s")
+			$rightContentPanells.hide();
+			var $this = $(this);
+			var url = $this.data("url");
+			$rightContentPanell.load(Path + url);
 		})
 
 	})

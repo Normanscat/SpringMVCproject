@@ -2,7 +2,7 @@ package com.qingshixun.page;
 
 public class Page {
 	// 1 每页显示数量
-	private int everyPage=3;
+	private int everyPage=2;
 	// 2总记录数
 	private int totalCount;
 	// 3总页数

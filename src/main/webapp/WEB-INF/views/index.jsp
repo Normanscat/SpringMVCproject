@@ -31,8 +31,10 @@
 		<aside id="left" class="left">
 			<div class="menu">
 				<a class="menu-item active" href="javascript:;"
-					data-url="/User/list">用户查询</a> <a data-url="/User/add"
-					href="javascript:;" class="menu-item add">用户新增</a>
+					data-url="/User/list">用户查询</a><a data-url="/hobby/list"
+					href="javascript:;" class="menu-item hobby">愛好管理</a> <a
+					data-url="/profession/list" href="javascript:;"
+					class="menu-item profession">职业管理</a>
 			</div>
 			<div class="head-avatar">
 				<img src="${pageContext.request.contextPath }/images/avatar.png"
@@ -42,7 +44,8 @@
 		</aside>
 		<div id="right" class="right"></div>
 	</div>
-	<div id="rights" class="rights"></div>
+	<div style="position: absolute; right: 10px; bottom: 66px;" id="rights"
+		class="rights"></div>
 	<footer id="footer"> Copyright © 2017.轻实训版权所有 </footer>
 </body>
 <script
@@ -55,22 +58,47 @@
 		var $rightContentPanell = $("body").find(".right");
 		var $rightContentPanells = $("body").find(".rights");
 		var Path = "${pageContext.request.contextPath }";
-		
+
 		//查询
 		$(".active").on("click", function() {
+			$rightContentPanells.show();
 			var $this = $(this);
 			var url = $this.data("url");
-			var urls =  "/User/lists";
+			var urls = "/User/lists";
 			$rightContentPanells.load(Path + urls);
-			$rightContentPanell.load(Path + url,{
-				currentpage: 1
+			$rightContentPanell.load(Path + url, {
+				currentpage : 1
 			});
 		}).first().click();
+
 		//添加
 		$(".add").on("click", function() {
+			$rightContentPanells.hide();
 			var $this = $(this);
 			var url = $this.data("url");
 			$rightContentPanell.load(Path + url);
+		})
+
+		//爱好
+		$(".hobby").on("click", function() {
+			$rightContentPanells.hide();
+			var $this = $(this);
+			var url = $this.data("url");
+			alert(Path + url)
+			$rightContentPanell.load(Path + url, {
+				currentpage : 1
+			});
+		})
+
+		//职业
+		$(".profession").on("click", function() {
+			$rightContentPanells.hide();
+			var $this = $(this);
+			var url = $this.data("url");
+			alert(Path + url)
+			$rightContentPanell.load(Path + url, {
+				currentpage : 1
+			});
 		})
 	});
 </script>

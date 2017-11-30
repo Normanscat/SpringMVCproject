@@ -25,6 +25,14 @@ public class UserService {
     @Autowired
     private UserDao userDao;
     
+ public String login(String name , String password){
+    	
+    	if(userDao.login(name, password)!=1){
+    		return "false";
+    	}
+    	return "success";
+    }
+    
     
     /**
      * 分頁查詢

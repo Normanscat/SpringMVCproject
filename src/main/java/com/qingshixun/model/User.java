@@ -6,6 +6,7 @@
 *********************************************/
 package com.qingshixun.model;
 
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,9 +26,9 @@ public class User {
 
 	private String sex;
 
-	private String profession;
+	private int profession;
 
-	private String hobby;
+	private int hobby;
 
 	private String email;
 
@@ -36,6 +37,10 @@ public class User {
 	private String image;
 
 	private String birthday;
+
+	private Date creattime;
+	
+	private Date updatetime;
 
 	public String getEmail() {
 		return email;
@@ -85,19 +90,19 @@ public class User {
 		this.password = password;
 	}
 
-	public String getProfession() {
+	public int getProfession() {
 		return profession;
 	}
 
-	public void setProfession(String profession) {
+	public void setProfession(int profession) {
 		this.profession = profession;
 	}
 
-	public String getHobby() {
+	public int getHobby() {
 		return hobby;
 	}
 
-	public void setHobby(String hobby) {
+	public void setHobby(int hobby) {
 		this.hobby = hobby;
 	}
 
@@ -107,6 +112,22 @@ public class User {
 
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
+	}
+
+	public Date getCreattime() {
+		return creattime;
+	}
+
+	public void setCreattime(Date creattime) {
+		this.creattime = creattime;
+	}
+
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
 	}
 
 }

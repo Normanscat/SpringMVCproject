@@ -25,9 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.qingshixun.dao.HobbyDao;
+import com.qingshixun.dao.ProfessionDao;
+import com.qingshixun.dao.UserDao;
 import com.qingshixun.model.User;
 import com.qingshixun.page.Page;
 import com.qingshixun.page.Result;
+import com.qingshixun.service.HobbyService;
 import com.qingshixun.service.UserService;
 
 @Controller
@@ -39,6 +43,12 @@ public class UserController {
 	@Autowired
 	private UserService UsertService;
 
+	@Autowired
+	private HobbyDao hobbydao;
+
+	@Autowired
+	private ProfessionDao professionDao;
+
 	/**
 	 * 跳转到用户列表页面
 	 * 
@@ -48,23 +58,18 @@ public class UserController {
 	 */
 	@RequestMapping("/list")
 	public String list(Model model, @RequestParam("currentpage") int currentpage) {
-		Page page=new Page();
-		
+		Page page = new Page();
 
-//		if (request.getParameter("currentPage") == null) {
-//			currentpage = 1;
-//		}
-//
 		System.out.println("currentpage数值为" + currentpage);
 		page.setCurrentPage(currentpage);
 		Result Users = UsertService.getAllPage(page);
 		model.addAttribute("Users", Users.getList());
 		return null;
 	}
-	
+
 	@RequestMapping("/lists")
 	public String lists(Model model) {
-		Page pages=new Page();
+		Page pages = new Page();
 		Result Users = UsertService.getAllPage(pages);
 		model.addAttribute("pages", Users.getPage());
 		return "User/page";
@@ -74,16 +79,14 @@ public class UserController {
 	 * 跳转到修改用户信息的页面
 	 * 
 	 * @param id
-	 * 用户 id
+	 *            用户 id
 	 */
 	@RequestMapping("/edit/{id}")
 	public String edit(Model model, @PathVariable("id") Integer id) {
 		logger.info("跳转到修改用户页面，用户 id=" + id);
 		User User = UsertService.getById(id);
 		model.addAttribute("User", User);
-		Page pages=new Page();
-		Result Users = UsertService.getAllPage(pages);
-		model.addAttribute("pages", Users.getPage());
+		model.addAttribute("hobby", hobbydao.getAll());
 		// 跳转页面到 WEB-INF/views/User/edit.jsp
 		return "User/edit";
 	}
@@ -122,16 +125,19 @@ public class UserController {
 
 		logger.info("删除用户， id=" + id);
 		UsertService.delete(id);
-
+		list(model, 1);
 		// 重定向到 /User/list
-		return "redirect:/User/list";
+		return "/User/list";
 	}
 
 	/**
 	 * 跳转到新增页面
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String add() {
+	public String add(Model model) {
+
+		model.addAttribute("hobby", hobbydao.getAll());
+		model.addAttribute("profession", professionDao.getAll());
 		// 跳转页面到 WEB-INF/views/User/add.jsp
 		return "User/add";
 	}

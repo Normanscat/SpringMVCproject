@@ -56,6 +56,6 @@
 
 
 	<!-- 指定默认路径 -->
-	<mvc:view-controller path="/" view-name="redirect:/index" />
+	<mvc:view-controller path="/" view-name="redirect:/login" />
 
 </beans>
