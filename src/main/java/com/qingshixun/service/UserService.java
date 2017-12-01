@@ -22,68 +22,78 @@ import com.qingshixun.page.Result;
 @Transactional
 public class UserService {
 
-    @Autowired
-    private UserDao userDao;
-    
- public String login(String name , String password){
-    	
-    	if(userDao.login(name, password)!=1){
-    		return "false";
-    	}
-    	return "success";
-    }
-    
-    
-    /**
-     * 分頁查詢
-     * 获取page对象和所有对象
-     * @param page
-     * @return
-     */
-    public Result getAllPage(Page page) {
-        page=PageUtil.creatPage(page, userDao.all());
-        List<User> all=userDao.queryALLCounts(page);
-        Result result= new Result();
-        result.setList(all);
-        result.setPage(page);
-        return result;
-    }
-    
-    
+	@Autowired
+	private UserDao userDao;
 
-    public void add(User user) {
-        userDao.add(user);
-    }
+	public String login(String name, String password) {
 
-    public void delete(int id) {
-        User user = new User();
-        user.setId(id);
-        userDao.delete(user);
-    }
+		if (userDao.login(name, password) != 1) {
+			return "false";
+		}
+		return "success";
+	}
 
-    public void update(User user) {
-        userDao.update(user);
-    }
+	/**
+	 * 分頁查詢 获取page对象和所有对象
+	 * 
+	 * @param page
+	 * @return
+	 */
+	public Result getAllPage(Page page) {
+		page = PageUtil.creatPage(page, userDao.all());
+		List<User> all = userDao.queryALLCounts(page);
+		Result result = new Result();
+		result.setList(all);
+		result.setPage(page);
+		return result;
+	}
 
-    /**
-     * 根据 id 查询商品对象 
-     * @param id 商品 id
-     * @return 商品对象
-     */
-    public User getById(int id) {
-        return userDao.getById(id);
-    }
+	/**
+	 * 模糊查询
+	 * 
+	 * @param user
+	 * @return 
+	 */
+	public List<User> Search(String search){
+		return userDao.search(search);
+	}
 
-    /**
-     * 查询所有的商品
-     * @return 商品集合
-     */
-    public List<User> getAll() {
-        return userDao.getAll();
-    }
+	public void add(User user) {
+		userDao.add(user);
+	}
 
-    public void delete(Integer[] ids) {
-        userDao.delete(ids);
-    }
+	public void delete(int id) {
+		User user = new User();
+		user.setId(id);
+		userDao.delete(user);
+	}
+
+	public void update(User user) {
+		userDao.update(user);
+	}
+
+	/**
+	 * 根据 id 查询商品对象
+	 * 
+	 * @param id
+	 *            商品 id
+	 * @return 商品对象
+	 */
+	public User getById(int id) {
+		return userDao.getById(id);
+	}
+
+	/**
+	 * 查询所有的商品
+	 * 
+	 * @return 商品集合
+	 */
+	public List<User> getAll() {
+		return userDao.getAll();
+	}
+
+	public void delete(Integer[] ids) {
+		userDao.delete(ids);
+	}
 
 }

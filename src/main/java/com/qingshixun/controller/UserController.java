@@ -76,9 +76,20 @@ public class UserController {
 	}
 
 	/**
+	 * 模糊查询
+	 */
+	@RequestMapping("/search")
+	public String search(Model model, @RequestParam("search") String search) {
+		List min = UsertService.Search(search);
+		model.addAttribute("Users", min);
+		return "User/list";
+	}
+
+	/**
 	 * 跳转到修改用户信息的页面
 	 * 
 	 * @param id
+	 * 
 	 *            用户 id
 	 */
 	@RequestMapping("/edit/{id}")
@@ -131,6 +142,21 @@ public class UserController {
 	}
 
 	/**
+	 * 批量删除
+	 * 
+	 * @param userIds
+	 * @return
+	 */
+	@RequestMapping("/deletes")
+	public String deletes(@RequestParam("Ids[]") Integer[] Ids) {
+
+		System.out.println("跳到了c层");
+		UsertService.delete(Ids);
+		return null;
+
+	}
+
+	/**
 	 * 跳转到新增页面
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -138,7 +164,6 @@ public class UserController {
 
 		model.addAttribute("hobby", hobbydao.getAll());
 		model.addAttribute("profession", professionDao.getAll());
-		// 跳转页面到 WEB-INF/views/User/add.jsp
 		return "User/add";
 	}
 
@@ -166,15 +191,4 @@ public class UserController {
 
 		return "success";
 	}
-
-	@RequestMapping("/delete")
-	public String delete(Integer[] ids) {
-		logger.info("删除多个：" + ids);
-
-		UsertService.delete(ids);
-
-		// 重定向到 /User/list
-		return "redirect:/User/list";
-	}
-
 }

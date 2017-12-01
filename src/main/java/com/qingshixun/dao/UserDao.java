@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import com.qingshixun.model.User;
 import com.qingshixun.page.Page;
 
-
 @Repository("userDao")
 public class UserDao {
 
@@ -36,21 +35,28 @@ public class UserDao {
 		sessionFactory.getCurrentSession().update(user);
 	}
 
+	public List<User> search(String search) {
+		String queryString = "FROM User where name like'" + "%" + search + "%" + "'";
+		return sessionFactory.getCurrentSession().createQuery(queryString).list();
+	}
+
 	/**
-	 * 根据 id 查询商品对象
+	 * 根据 id 查询用户对象
 	 * 
 	 * @param id
-	 *            商品 id
-	 * @return 商品对象
+	 * 
+	 *            用户 id
+	 * 
+	 * @return 用户对象
 	 */
 	public User getById(int id) {
 		return (User) sessionFactory.getCurrentSession().get(User.class, id);
 	}
 
 	/**
-	 * 查询所有的商品
+	 * 查询所有的用户
 	 * 
-	 * @return 商品集合
+	 * @return 用户集合
 	 */
 	public List<User> getAll() {
 		return sessionFactory.getCurrentSession().createQuery("from User").list();
@@ -111,6 +117,5 @@ public class UserDao {
 		System.out.println("登入用户为" + name);
 		return queruobject.list().size();
 	}
-
 
 }

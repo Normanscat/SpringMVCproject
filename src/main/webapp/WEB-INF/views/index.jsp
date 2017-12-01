@@ -84,7 +84,6 @@
 			$rightContentPanells.hide();
 			var $this = $(this);
 			var url = $this.data("url");
-			alert(Path + url)
 			$rightContentPanell.load(Path + url, {
 				currentpage : 1
 			});
@@ -95,11 +94,12 @@
 			$rightContentPanells.hide();
 			var $this = $(this);
 			var url = $this.data("url");
-			alert(Path + url)
 			$rightContentPanell.load(Path + url, {
 				currentpage : 1
 			});
 		})
+		
+		
 	});
 </script>
 
